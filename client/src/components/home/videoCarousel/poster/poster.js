@@ -24,16 +24,16 @@ class Poster extends Component {
 	}
 	
 	render() {
-		console.log(this.props.poster);
+		// console.log(this.props.poster);
 		return (
-			<li>
+			<div className="carousel-item">
 				<div className="poster" style={this.state.poster.style}></div>
-				<a href={this.state.content.link}>
+				<a href="#" dataSet={this.state.content.link}>
 					<div className="content">
 						<h2>{this.state.content.title}</h2>
 					</div>
 				</a>
-			</li>
+			</div>
 		);
 	}
 	

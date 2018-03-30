@@ -5,11 +5,36 @@
 		position: fixed;
 		text-align: center;
 		top: 50%;
-		width: 5000px;
+
 		transform: translateY(-50%) translateX(-50%);
 		
 		.no-videos-loaded {
 			color: rgba(255,255,255,1);
+		}
+		
+	}
+	
+	.controls {
+		
+		.left-arrow, .right-arrow {
+			color: rgba(255,255,255,0.1);
+			cursor: pointer;
+			display: fixed;
+			font-size: 10vh;
+			position: absolute;
+			top: 45vh;
+			&:hover {
+				color: rgba(255,255,255,0.8);
+			}
+		}
+		
+		.left-arrow {
+			margin-left: 5vw;
+		}
+		
+		.right-arrow {
+			margin-right: 5vw;
+			right: 0;
 		}
 		
 	}
