@@ -33,7 +33,7 @@ app.use(cors({
 	origin: process.env.CLIENT_DOMAIN,
 	credentials: true
 }));
-app.use('/', routes);
+app.use('/api', routes);
 
 app.listen(process.env.SERVER_PORT, () => {
 	console.info(

@@ -1,12 +1,12 @@
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import mainReducer from '../reducers/mainReducer';
+import homeReducer from '../reducers/homeReducer';
 
-export let initStore = () => {
+export let initaliseStore = () => {
 
 	const reducer = combineReducers({
-		test: mainReducer
+		home: homeReducer
 	});
 
 	/* The thunk middleware enables the dispatch of functions as actions */

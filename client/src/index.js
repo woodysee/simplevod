@@ -4,15 +4,18 @@ import './index.css';
 import Client from './components/client';
 import registerServiceWorker from './registerServiceWorker';
 
-// Redux
-import { Provider } from 'react-redux';
-import { initStore } from './store/store';
-
-// Redux: Actions
+// Actions
 import { getVideos } from './actions/getVideos';
 
+// Redux
+import { Provider } from 'react-redux';
+import { initaliseStore } from './store/store';
+
+// Redux: Actions
+
+
 // Initialising store
-const store = initStore();
+const store = initaliseStore();
 
 // Load videos
 store.dispatch(getVideos());

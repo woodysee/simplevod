@@ -27,6 +27,7 @@ exports.getVideos = (req, res, next) => {
 		externalResponse.on('end', () => {
 			const videosListBuffer = Buffer.concat(buffers);
 			const videosList = JSON.parse(videosListBuffer.toString());
+			console.log(videosList);
 			res.json(videosList);
 			// console.log(body.toString());
 		});

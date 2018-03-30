@@ -1,6 +1,12 @@
 {
 	"name": "simplevod-client",
 	"version": "0.1.0",
+	"proxy": {
+		"/api": {
+			"target": "http://woodys-mac-pro.local:3001",
+			"ws": true
+		}
+	},
 	"private": true,
 	"dependencies": {
 		"ajv": "^6.4.0",

@@ -7,11 +7,12 @@ export const loadVideos = (videos) => {
 	}
 };
 
-export const getVideos = (text) => {
+export const getVideos = () => {
 	return (dispatch) => {
-		axios.get('http://localhost:3001/api/videos', {
+		axios.get('/api/videos', {
 			headers: {
-				'Content-Type' : 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			withCredentials: true,
 			credentials: 'same-origin'
@@ -20,7 +21,7 @@ export const getVideos = (text) => {
 			const videos = response.data;
 			dispatch(loadVideos(videos));
 		}).catch((error)=> {
-			console.error('Unable to retrieve videos from our server -', error);
+			console.error('Unable to retrieve list of videos from external source via Simple VOD\'s proxy server -', error);
 		});
 	};
 };
