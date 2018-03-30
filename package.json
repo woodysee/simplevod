@@ -1,0 +1,23 @@
+{
+  "name": "simplevod",
+  "version": "1.0.0",
+  "description": "Simple VOD. No node packages should be installed at this level.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-client": "cd client/ && npm start",
+    "start-server": "cd server/ && npm start",
+    "start": "npm-run-all -p start-client start-server"
+  },
+  "author": "Woody See",
+  "license": "ISC",
+  "dependencies": {
+    "npm-run-all": "^4.1.2"
+  },
+  "main": "server/server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/woodysee/simplevod.git"
+  },
+  "homepage": "https://bitbucket.org/woodysee/simplevod#readme"
+}
