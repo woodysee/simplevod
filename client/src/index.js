@@ -20,7 +20,7 @@ const store = initaliseStore();
 // Load videos
 store.dispatch(getVideos());
 
-// Dispatches
+// Dispatching...
 
 ReactDOM.render((
 	<Provider store={store}>

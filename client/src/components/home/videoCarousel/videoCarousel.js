@@ -2,51 +2,64 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // console.log("Importing presentational modules...");
-import Thumbnail from './thumbnail/thumbnail.js';
+import Poster from './poster/poster.js';
 // import logo from '../logo.svg';
 import './videoCarousel.css';
 
-class Home extends Component {
+class VideoCarousel extends Component {
 	
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
-		console.log(this.props);
-		const initVideos = (videos) => {
-			if (typeof videos === 'undefined' || videos.length === 0) {
+		// console.log(this.props.home.videos.entries);
+		
+		const listOfVideos = this.props.home.videos.entries;
+		
+		const initaliseVideos = (videos) => {
+			const listOfVideosAreLoaded = typeof videos === 'undefined' || videos.length === 0;
+			if (listOfVideosAreLoaded) {
 				return (
-					<span className="no-videos-loaded">No videos loaded</span>
-				);
+					<ul className="items">
+						<span className="no-videos-loaded">
+							Loading videos...
+						</span>
+					</ul>
+				)
 			} else {
-				renderThumbnails(this.props.videos);
+				return (
+					<ul className="items">
+						{ renderInitialThumbnails(videos) }
+					</ul>
+				)
 			}
 		}
 		
-		const renderThumbnails = (videos) => {
+		const renderInitialThumbnails = (videos) => {
+			let i = 0;
 			return videos.map((video) => {
-				return (
-					<Thumbnail videos={this.props.videos} />
-				)
+				i++;
+				while (i <= 10) {
+					return (
+						<Poster key={i} video={video} />
+					)
+				}
 			});
 		}
-		
+
 		return (
 			<div className="video-carousel">
-				<ul className="items">
-					{ initVideos(this.props.videos) }
-				</ul>
+				{ initaliseVideos(listOfVideos) }
 			</div>
 		);
+		
 	}
+	
 }
 
 const mapStateToProps = (state) => {
 	// console.info("Getting state for props...")
+	console.info(state);
 	return {
-		videos: state.videos
+		home: state.home
 	}
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(VideoCarousel);

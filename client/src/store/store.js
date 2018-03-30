@@ -1,7 +1,7 @@
 import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import homeReducer from '../reducers/homeReducer';
+import homeReducer from '../reducers/homeReducer.js';
 
 export let initaliseStore = () => {
 

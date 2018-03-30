@@ -1,16 +1,17 @@
 const initialState = {
-	videos: []
+	videos: {}
 }
 
 const homeReducer = (state = initialState, action) => {
-
 	switch (action.type) {
 		case 'LOAD_VIDEOS':
-			return action.getVideos || []
-			break;
+			return {
+				videos: action.videos
+			}
 		default:
 			return state
 	}
+	
 }
 
 export default homeReducer;
