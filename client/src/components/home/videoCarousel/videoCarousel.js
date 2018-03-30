@@ -7,15 +7,12 @@ import './videoCarousel.css';
 
 class Home extends Component {
 	
-	
 	render() {
 		return (
 			<div className="video-carousel">
-        <ul class="items">
-					
+				<ul className="items">
 					<Thumbnail />
-
-        </ul>
+				</ul>
 			</div>
 		);
 	}

@@ -8,8 +8,14 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { initStore } from './store/store';
 
+// Redux: Actions
+import { getVideos } from './actions/getVideos';
+
 // Initialising store
 const store = initStore();
+
+// Load videos
+store.dispatch(getVideos());
 
 // Dispatches
 

@@ -5,11 +5,11 @@ import mainReducer from '../reducers/mainReducer';
 
 export let initStore = () => {
 
-	const reducer = combineReducers( {
+	const reducer = combineReducers({
 		test: mainReducer
 	});
 
-	/* thunk middleware enables dispatch of functions as actions */
+	/* The thunk middleware enables the dispatch of functions as actions */
 	const store = createStore(reducer, compose(
 		applyMiddleware(thunk),
 		window.devToolsExtension ? window.devToolsExtension() : f => f,

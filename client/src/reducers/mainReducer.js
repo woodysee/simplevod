@@ -1,15 +1,12 @@
 const initialState = {
-	testData: ""
+	testData: {}
 }
 
 const mainReducer = (state = initialState, action) => {
 
 	switch (action.type) {
-		case 'TEST_ACTION':
-			return {
-				...state,
-				testData: action.text
-			}
+		case 'GET_VIDEOS':
+			return action.getVideos || {}
 			break;
 		default:
 			return state

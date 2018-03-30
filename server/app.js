@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // Configure .env path
 dotenv.config();
@@ -16,7 +17,8 @@ app.use(cookieParser());
 app.use(express.static(__dirname + "/../client/"));
 
 // console.log("Connecting to NoSQL database...");
-mongoose.Promise = global.Promise; // To handle promise rejection
+mongoose.Promise = global.Promise;
+// To handle promise rejections. See http://mongoosejs.com/docs/promises.html	
 mongoose.connect(process.env.MONGO_URI);
 const db = mongoose.connection;
 db.on('error', (err) => {
@@ -25,7 +27,12 @@ db.on('error', (err) => {
 	process.exit();
 });
 
-const routes = require('./routes/index');
+const routes = require('./routes');
+// console.log("Allowing Cross-Origin Resource Sharing for only the client domain...");
+app.use(cors({
+	origin: process.env.CLIENT_DOMAIN,
+	credentials: true
+}));
 app.use('/', routes);
 
 app.listen(process.env.SERVER_PORT, () => {
