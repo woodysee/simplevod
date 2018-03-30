@@ -13,11 +13,11 @@ class VideoCarousel extends Component {
 		
 		const listOfVideos = this.props.home.videos.entries;
 		
-		const initaliseVideos = (videos) => {
-			const listOfVideosAreLoaded = typeof videos === 'undefined' || videos.length === 0;
-			if (listOfVideosAreLoaded) {
+		const initialisePosters = (posters) => {
+			const thereArePostersToBeLoaded = typeof posters === 'undefined' || posters.length === 0;
+			if (thereArePostersToBeLoaded) {
 				return (
-					<ul className="items">
+					<ul className="posters">
 						<span className="no-videos-loaded">
 							Loading videos...
 						</span>
@@ -25,20 +25,20 @@ class VideoCarousel extends Component {
 				)
 			} else {
 				return (
-					<ul className="items">
-						{ renderInitialThumbnails(videos) }
+					<ul className="posters">
+						{ renderInitialPosters(posters, 6) }
 					</ul>
 				)
 			}
 		}
 		
-		const renderInitialThumbnails = (videos) => {
+		const renderInitialPosters = (posters, limit) => {
 			let i = 0;
-			return videos.map((video) => {
+			return posters.map((poster) => {
 				i++;
-				while (i <= 10) {
+				while (i <= limit) {
 					return (
-						<Poster key={i} video={video} />
+						<Poster key={i} poster={poster} />
 					)
 				}
 			});
@@ -46,7 +46,7 @@ class VideoCarousel extends Component {
 
 		return (
 			<div className="video-carousel">
-				{ initaliseVideos(listOfVideos) }
+				{ initialisePosters(listOfVideos) }
 			</div>
 		);
 		

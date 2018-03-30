@@ -12,19 +12,19 @@ class Poster extends Component {
 		this.state = {
 			poster: {
 				style: {
-					backgroundImage: `url('${this.props.video.images[0].url}')`
+					backgroundImage: `url('${this.props.poster.images[0].url}')`
 				}
 			},
 			content: {
-				link: this.props.video.contents[0].url,
-				title: this.props.video.title
+				link: this.props.poster.contents[0].url,
+				title: this.props.poster.title
 			}
 		}
 		
 	}
 	
 	render() {
-		console.log(this.props.video);
+		console.log(this.props.poster);
 		return (
 			<li>
 				<div className="poster" style={this.state.poster.style}></div>

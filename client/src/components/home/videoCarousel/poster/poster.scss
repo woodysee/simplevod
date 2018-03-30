@@ -1,4 +1,4 @@
-.items {
+.posters {
 	
 	li {
 		background-color: black;
@@ -6,6 +6,7 @@
 		display: inline-block;
 		height: 200px;
 		list-style: none;
+		margin: 0 10px 0 10px;
 		position: relative;	
 		overflow: hidden;
 		transition-duration: .5s;
@@ -38,6 +39,7 @@
 			color: white;
 			cursor: pointer;
 			display: block;
+			font-family: 'IBM Plex Sans Condensed', sans-serif;
 			height: 100%;
 			position: relative;
 			text-decoration: none;
