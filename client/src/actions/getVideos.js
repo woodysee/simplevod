@@ -11,8 +11,8 @@ export const getVideos = (text) => {
 	return (dispatch) => {
 		axios.get('http://localhost:3001/api/videos', {
 			headers: {
-				'Content-Type' : 'application/x-www-form-urlencoded'
-			}, 
+				'Content-Type' : 'application/json'
+			},
 			withCredentials: true,
 			credentials: 'same-origin'
 		}).then((response) => {
@@ -20,8 +20,7 @@ export const getVideos = (text) => {
 			const videos = response.data;
 			dispatch(loadVideos(videos));
 		}).catch((error)=> {
-			console.error('Unable to get videos:');
-			console.error(error);
+			console.error('Unable to retrieve videos from our server -', error);
 		});
 	};
 };
