@@ -65,7 +65,7 @@ class VideoCarousel extends Component {
 			case 'ArrowUp':
 				direction = 'left';
 				break;
-			case 'a':
+			case 'd':
 				direction = 'left';
 				break;
 			default:
