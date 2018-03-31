@@ -57,6 +57,7 @@ class Poster extends Component {
 						<h2>{poster.content.title}</h2>
 					</div>
 				</a>
+				<h3>{poster.content.title}</h3>
 			</li>
 		);
 	}

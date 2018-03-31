@@ -11,23 +11,24 @@ $carousel-item__scale: 1.6;
 		height: $carousel-poster-height + px;
 		list-style: none;
 		margin: 0 5px 0 5px;
-		position: relative;	
-		overflow: hidden;
+		position: relative;
 		transition-duration: .5s;
-		vertical-align: middle;
+		vertical-align: middle; // Allows protruding growth instead of upward growth animation
 		width: $carousel-poster-width + px;
 		
 		.poster {
-			position: absolute;
-			width: 100%;
-			height: 100%;
 			background-size: cover;
 			background-position: left top;
+			height: 100%;
+			position: absolute;
+			overflow: hidden;
+			width: 100%;
 		}
 		
 		&:hover {
 			height: ($carousel-poster-height * $carousel-item__scale) + px;
 			margin-top: 0px;
+			overflow: hidden;
 			transition-delay: .025s;
 			width: ($carousel-poster-width * $carousel-item__scale) + px;
 			
@@ -47,6 +48,7 @@ $carousel-item__scale: 1.6;
 			font-family: 'IBM Plex Sans Condensed', sans-serif;
 			height: 100%;
 			position: relative;
+			overflow: hidden;
 			text-decoration: none;
 			width: 100%;
 			z-index: 2;
@@ -62,7 +64,7 @@ $carousel-item__scale: 1.6;
 				transform: translateY(50%) translateX(-50%);
 				transition-duration: 1s;
 				width: ($carousel-poster-width * $carousel-item__scale) + px;
-				/* Movie Title */
+				/* Movie Description */
 				h2 {
 					color: white;
 					font-size: ($carousel-poster-width / 10) + px;
@@ -70,5 +72,18 @@ $carousel-item__scale: 1.6;
 				}
 			}
 		}
+		
+		h3 {
+			color: white;
+			display: block;
+			font-size: ($carousel-poster-width / 10) + px;
+			font-weight: 300;
+			position: absolute;
+			overflow: unset;
+			text-align: left;
+			text-overflow: ellipsis;
+			z-index: 1000;
+		}
+		
 	}
 }
