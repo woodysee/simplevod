@@ -34,7 +34,7 @@ class VideoCarousel extends Component {
 		left = left === posters.length ? 0 : left;
 		right = right === -1 ? (posters.length-1) : right;
 		right = right === posters.length ? 0 : right;
-		console.log(left, " < >", right);
+		// console.log(left, " < >", right);
 		this.setState((state) => {
 			return {
 				carousel: {
