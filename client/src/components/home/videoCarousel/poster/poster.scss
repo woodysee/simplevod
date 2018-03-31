@@ -5,7 +5,7 @@ $carousel-item__scale: 1.6;
 .posters {
 
 	.carousel-item {
-		background-color: black;
+		background-color: rgba(0,0,0,1);
 		cursor: pointer;
 		display: inline-block;
 		height: $carousel-poster-height + px;

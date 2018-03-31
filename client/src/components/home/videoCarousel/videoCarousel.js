@@ -56,7 +56,6 @@ class VideoCarousel extends Component {
 				let orderedIndex = lowerBound, carouselIndex = 0;
 				const tailsOfOrderedIndicesLoaded = lowerBound > upperBound;
 				let carouselIndices = [];
-				const reachedTheEndOfVideosList = length - 1;
 				const tailLength = tailsOfOrderedIndicesLoaded ? length - lowerBound : right;
 				for (carouselIndex = 0; carouselIndex < tailLength; carouselIndex++) {
 					carouselIndices.push(orderedIndex);

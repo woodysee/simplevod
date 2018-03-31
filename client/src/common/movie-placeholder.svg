@@ -1,0 +1,35 @@
+<svg id="carousel-poster__movie-poster" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 320">
+	<defs>
+		<style>
+			.cls-1 {
+				fill: #ccc;
+			}
+			.cls-2 {
+				fill: #4d4d4d;
+			}
+		</style>
+	</defs>
+	<title>Movie Placeholder</title>
+	<rect class="cls-1" x="-7.12" y="-6" width="204.04" height="331.5"/>
+	<rect class="cls-2" x="46.33" y="38" width="97.14" height="161.31" rx="9.21" ry="9.21"/>
+	<rect class="cls-1" x="54.2" y="49.02" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="123.76" y="49.02" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="54.2" y="70.5" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="123.76" y="70.5" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="54.2" y="91.99" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="123.76" y="91.99" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="54.2" y="113.48" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="123.76" y="113.48" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="54.2" y="134.97" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="123.76" y="134.97" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="54.2" y="156.45" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="123.76" y="156.45" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="54.2" y="177.94" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="123.76" y="177.94" width="11.24" height="11.24" rx="5.62" ry="5.62"/>
+	<rect class="cls-1" x="69.58" y="65" width="49" height="1"/>
+	<rect class="cls-1" x="69.58" y="86" width="49" height="1"/>
+	<rect class="cls-1" x="69.58" y="107" width="49" height="1"/>
+	<rect class="cls-1" x="69.58" y="130" width="49" height="1"/>
+	<rect class="cls-1" x="69.58" y="151" width="49" height="1"/>
+	<rect class="cls-1" x="69.58" y="172" width="49" height="1"/>
+</svg>
