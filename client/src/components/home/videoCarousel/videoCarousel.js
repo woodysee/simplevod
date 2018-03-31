@@ -46,6 +46,88 @@ class VideoCarousel extends Component {
 		
 	}
 	
+	keyThroughCarousel(e) {
+
+		let direction;
+		switch (e.key) {
+			case 'ArrowRight':
+				direction = 'right';
+				break;
+			case 'ArrowDown':
+				direction = 'right';
+				break;
+			case 'a':
+				direction = 'right';
+				break;
+			case 'ArrowLeft':
+				direction = 'left';
+				break;
+			case 'ArrowUp':
+				direction = 'left';
+				break;
+			case 'a':
+				direction = 'left';
+				break;
+			default:
+		}
+		switch (direction) {
+			case 'right':
+				this.shiftCarousel(direction);
+				break;
+			case 'left':
+				this.shiftCarousel(direction);
+				break;
+			default:
+		}
+
+	}
+	
+	wheelThroughCarousel(e) {
+		let wheelBehaviour, direction;
+		switch (true) {
+			case e.deltaX > 0:
+				wheelBehaviour = 'right';
+				break;
+			case e.deltaY > 0:
+				wheelBehaviour = 'down';
+				break;
+			case e.deltaX < 0:
+				wheelBehaviour = 'left';
+				break;
+			case e.deltaY < 0:
+				wheelBehaviour = 'up';
+				break;
+			default: wheelBehaviour = 'static';
+		}
+		switch (wheelBehaviour) {
+			case 'right':
+				direction = 'right';
+				this.shiftCarousel(direction);
+			case 'down':
+				direction = 'right';
+				this.shiftCarousel(direction);
+				break;
+			case 'left':
+				direction = 'left';
+				this.shiftCarousel(direction);
+				break;
+			case 'up':
+				direction = 'left';
+				this.shiftCarousel(direction);
+				break;
+			default:
+		}
+	}
+	
+	componentDidMount() {
+		const carousel = document.getElementsByClassName('video-carousel')[0];
+		console.log(carousel);
+		carousel.dispatchEvent(new Event('click'));
+		window.addEventListener("keydown", (e) => {
+			this.keyThroughCarousel(e);
+		}, false);
+	}
+	
 	render() {
 		
 		const listOfPosters = this.props.home.videos.entries;
@@ -99,7 +181,7 @@ class VideoCarousel extends Component {
 		}
 
 		return (
-			<div className="video-carousel">
+			<div className="video-carousel" onWheel={ (e) => this.wheelThroughCarousel(e) } onKeyDown={ (e) => this.keyThroughCarousel(e) }>
 				{ initialisePosters(listOfPosters, this.state.carousel.left, this.state.carousel.right) }
 				<div className="controls">
 					<FontAwesomeIcon icon={faArrowCircleLeft} className="left-arrow" onClick={ () => this.shiftCarousel('left') } />
@@ -108,6 +190,12 @@ class VideoCarousel extends Component {
 			</div>
 		);
 		
+	}
+	
+	componentWillUnmount() {
+		window.removeEvent("keydown", (e) => {
+			this.keyThroughCarousel(e);
+		}, false);
 	}
 	
 }
