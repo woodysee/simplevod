@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // console.log("Importing presentational modules...");
-import OwlCarousel from 'react-owl-carousel';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faArrowCircleLeft from '@fortawesome/fontawesome-free-solid/faArrowCircleLeft.js';
 import faArrowCircleRight from '@fortawesome/fontawesome-free-solid/faArrowCircleRight.js';
@@ -18,16 +17,18 @@ class VideoCarousel extends Component {
 		const listOfVideos = this.props.home.videos.entries;
 		
 		const renderPosters = (posters, limit) => {
-			if (typeof limit == 'undefined' || limit == 0) {
+			if (typeof limit === 'undefined' || limit === 0) {
 				limit = posters.length
 			};
 			return posters.map((poster) => {
-				let i = 0, key;
-				key = i;
-				i++;
-				return (
-					<Poster key={key} poster={poster} />
-				)
+				let i = 0;
+				while (i < limit) {
+					i++;
+					return (
+						<Poster key={i} poster={poster} />
+					)
+				}
+				
 			});
 		}
 		
@@ -43,9 +44,9 @@ class VideoCarousel extends Component {
 				)
 			} else {
 				return (
-					<OwlCarousel className="posters" loop margin={0} items={6} mouseDrag touchDrag lazyLoad nav>
-						{ renderPosters(listOfVideos) }
-					</OwlCarousel>
+					<ul className="posters">
+						{ renderPosters(listOfVideos, 6) }
+					</ul>
 				)
 			}
 		}

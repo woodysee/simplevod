@@ -5,7 +5,7 @@
 		position: fixed;
 		text-align: center;
 		top: 50%;
-
+		width: 500vw; // Needed to stretch the posters across
 		transform: translateY(-50%) translateX(-50%);
 		
 		.no-videos-loaded {
