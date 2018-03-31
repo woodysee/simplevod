@@ -1,8 +1,14 @@
 // console.log("Importing fundamental modules...");
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom';
 
 // console.log("Importing children components...");
 import Home from './home/home.js';
+import Video from './video/video.js';
 
 // console.log("Importing presentational modules...");
 import './client.css';
@@ -10,11 +16,14 @@ import './client.css';
 class Client extends Component {
 	render() {
 		return (
-			<div className="Client">
-				<Home />
-			</div>
+			<Router>
+				<Switch>
+					<Route exact path="/" component={Home} />
+					<Route exact path="/video/:id" component={Video} />
+				</Switch>
+			</Router>
 		);
 	}
 }
-
+	
 export default Client;

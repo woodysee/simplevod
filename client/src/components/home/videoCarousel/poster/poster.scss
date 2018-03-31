@@ -32,7 +32,7 @@ $carousel-item__scale: 1.6;
 			transition-delay: .025s;
 			width: ($carousel-poster-width * $carousel-item__scale) + px;
 			
-			a {
+			.video-link {
 				.content {
 					opacity: 1;
 					transform: translateY(20%) translateX(-50%);
@@ -41,7 +41,7 @@ $carousel-item__scale: 1.6;
 			}
 		}
 		
-		a {
+		.video-link {
 			color: white;
 			cursor: pointer;
 			display: block;

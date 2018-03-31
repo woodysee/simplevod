@@ -13,15 +13,17 @@ class VideoCarousel extends Component {
 	
 	constructor(props) {
 		super(props);
+		console.log(props);
 		this.state = {
 			carousel: {
 				posters: this.props.home.videos.entries,
 				totalLength: this.props.home.videos.totalCount,
-				slideLength: 12,
 				left: 0,
+				posterSelected: 10,
 				right: 20
 			}
 		}
+		console.log(this.state);
 	}
 	
 	shiftCarousel(direction) {
@@ -30,15 +32,19 @@ class VideoCarousel extends Component {
 		direction = direction === 'left' ? -1 : 1;
 		let left = this.state.carousel.left + direction;
 		let right = this.state.carousel.right + direction;
+		let posterSelected = this.state.carousel.posterSelected + direction;
 		left = left === -1 ? (posters.length-1) : left;
 		left = left === posters.length ? 0 : left;
 		right = right === -1 ? (posters.length-1) : right;
 		right = right === posters.length ? 0 : right;
+		posterSelected = posterSelected === -1 ? (posters.length-1) : posterSelected;
+		posterSelected = posterSelected === posterSelected.length ? 0 : posterSelected;
 		// console.log(left, " < >", right);
 		this.setState((state) => {
 			return {
 				carousel: {
 					left: left,
+					posterSelected: posterSelected,
 					right: right
 				}
 			}
@@ -56,7 +62,7 @@ class VideoCarousel extends Component {
 			case 'ArrowDown':
 				direction = 'right';
 				break;
-			case 'a':
+			case 'd':
 				direction = 'right';
 				break;
 			case 'ArrowLeft':
@@ -65,7 +71,7 @@ class VideoCarousel extends Component {
 			case 'ArrowUp':
 				direction = 'left';
 				break;
-			case 'd':
+			case 'a':
 				direction = 'left';
 				break;
 			default:
@@ -103,6 +109,7 @@ class VideoCarousel extends Component {
 			case 'right':
 				direction = 'right';
 				this.shiftCarousel(direction);
+				break;
 			case 'down':
 				direction = 'right';
 				this.shiftCarousel(direction);
@@ -121,24 +128,48 @@ class VideoCarousel extends Component {
 	
 	componentDidMount() {
 		const carousel = document.getElementsByClassName('video-carousel')[0];
-		console.log(carousel);
 		carousel.dispatchEvent(new Event('click'));
 		window.addEventListener("keydown", (e) => {
 			this.keyThroughCarousel(e);
 		}, false);
+		const rightTailValueContinuesToExceedPostersLength = this.state.carousel.right >= this.props.home.videos.totalCount;
+		if (rightTailValueContinuesToExceedPostersLength) {
+			this.setState({
+				carousel: {
+					left: 0,
+					right: this.props.home.videos.totalCount - 1
+				}
+			});
+		};
 	}
 	
 	render() {
 		
 		const listOfPosters = this.props.home.videos.entries;
-		
+		const posterSelected = this.state.carousel.posterSelected; // The poster to be focused
 		const renderPosters = (posters, left, right) => {
+			right = right >= posters.length ? posters.length - 1 : right;
+			if (right >= posters.length) {
+				
+			}
 			const generateCarouselIndices = (length, lowerBound, upperBound) => {
 				// console.log("Getting lower and upper bounds of total items inside a carousel to allow for a recursively consistent number of items per carousel slide to be loaded regardless of total length of carousel items and returning an array of indices...");
+				right = right >= posters.length ? posters.length - 1 : right; // Check if initial right tail value is more than the length of posters
+				console.log(length);
 				let orderedIndex = lowerBound, carouselIndex = 0;
 				const tailsOfOrderedIndicesLoaded = lowerBound > upperBound;
-				let carouselIndices = [];
-				const tailLength = tailsOfOrderedIndicesLoaded ? length - lowerBound : right;
+				const rangeInsideOrderedIndices = upperBound > lowerBound && upperBound < length;
+				let carouselIndices = [], tailLength;
+				switch (true) {
+					case tailsOfOrderedIndicesLoaded:
+						tailLength = length - lowerBound;
+						break;
+					case rangeInsideOrderedIndices:
+						tailLength = upperBound - lowerBound;
+						break;
+					default:
+						tailLength = upperBound;
+				}
 				for (carouselIndex = 0; carouselIndex < tailLength; carouselIndex++) {
 					carouselIndices.push(orderedIndex);
 					orderedIndex++;
@@ -154,9 +185,10 @@ class VideoCarousel extends Component {
 				return carouselIndices;
 			}
 			const posterIndices = generateCarouselIndices(posters.length, left, right);
+			console.log(posterIndices);
 			return posterIndices.map((index) => {
 				return (
-					<Poster key={index} tabindex={index} poster={posters[index]} />
+					<Poster key={index} poster={posters[index]} focused={ index === posterSelected }  />
 				)
 			})
 		};
@@ -193,9 +225,7 @@ class VideoCarousel extends Component {
 	}
 	
 	componentWillUnmount() {
-		window.removeEvent("keydown", (e) => {
-			this.keyThroughCarousel(e);
-		}, false);
+
 	}
 	
 }
@@ -207,5 +237,4 @@ const mapStateToProps = (state) => {
 		home: state.home
 	}
 }
-
 export default connect(mapStateToProps)(VideoCarousel);
