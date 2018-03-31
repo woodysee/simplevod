@@ -54,18 +54,18 @@ $carousel-item__scale: 1.6;
 			.content {
 				background: linear-gradient(transparent, rgba(0, 0, 0, .75));
 				bottom: 0;
-				height: 100px;
+				height: ($carousel-poster-height * $carousel-item__scale / 3) + px;
 				left: 50%;
 				opacity: 0;
-				padding: 40px 10px 10px 10px;
+				padding: 30px 10px 20px 10px;
 				position: absolute;
 				transform: translateY(50%) translateX(-50%);
 				transition-duration: 1s;
-				width: 400px;
+				width: ($carousel-poster-width * $carousel-item__scale) + px;
 				/* Movie Title */
 				h2 {
 					color: white;
-					font-size: ($carousel-poster-width/10) + px;
+					font-size: ($carousel-poster-width / 10) + px;
 					font-weight: 300;
 				}
 			}

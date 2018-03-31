@@ -6,31 +6,43 @@ import './poster.css';
 
 class Poster extends Component {
 	
-	constructor(props) {
-		super(props);
+	render() {
+		// console.log(this.props.poster);
 		
-		this.state = {
-			poster: {
-				style: {
-					backgroundImage: `url('${this.props.poster.images[0].url}')`
-				}
-			},
+		let poster = {
 			content: {
-				link: this.props.poster.contents[0].url,
-				title: this.props.poster.title
+				link: 'https://i.imgur.com/EgnNfZo.gifv',
+				title: 'Loading...'
+			},
+			style: {
+				backgroundImage: `url('https://i.imgur.com/EgnNfZo.gifv')`
 			}
 		}
 		
-	}
-	
-	render() {
-		// console.log(this.props.poster);
+		if (typeof this.props.poster !== 'undefined') {
+			if (typeof this.props.poster.images !== 'undefined') {
+				if (typeof this.props.poster.images[0].url !== 'undefined') {
+					poster.style.backgroundImage = `url('${this.props.poster.images[0].url}')`;
+				}
+			}
+
+			if (typeof this.props.poster.contents !== 'undefined') {
+				poster.content.link = this.props.poster.contents[0].url;
+			}
+			
+			if (typeof this.props.poster.title !== 'undefined') {
+				poster.content.title = this.props.poster.title;
+			}
+		}
+		
+
+		
 		return (
 			<li className="carousel-item">
-				<div className="poster" style={this.state.poster.style}></div>
-				<a href="#" test={this.state.content.link}>
+				<div className="poster" style={poster.style}></div>
+				<a href="#" test={poster.content.link}>
 					<div className="content">
-						<h2>{this.state.content.title}</h2>
+						<h2>{poster.content.title}</h2>
 					</div>
 				</a>
 			</li>

@@ -5,47 +5,95 @@ import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faArrowCircleLeft from '@fortawesome/fontawesome-free-solid/faArrowCircleLeft.js';
 import faArrowCircleRight from '@fortawesome/fontawesome-free-solid/faArrowCircleRight.js';
-
 import Poster from './poster/poster.js';
-// import logo from '../logo.svg';
+import loadingSpinner from '../../../common/loading-spinner.gif';
 import './videoCarousel.css';
 
 class VideoCarousel extends Component {
 	
+	constructor(props) {
+		super(props);
+		this.state = {
+			carousel: {
+				posters: this.props.home.videos.entries,
+				totalLength: this.props.home.videos.totalCount,
+				slideLength: 12,
+				left: 0,
+				right: 20
+			}
+		}
+	}
+	
+	shiftCarousel(direction) {
+		// console.log("Sets the upper and lower bounds of the current slide based on the direction to allow the user to shift through the carousel per poster in both directions...");
+		const posters = this.props.home.videos.entries;
+		direction = direction === 'left' ? -1 : 1;
+		let left = this.state.carousel.left + direction;
+		let right = this.state.carousel.right + direction;
+		left = left === -1 ? (posters.length-1) : left;
+		left = left === posters.length ? 0 : left;
+		right = right === -1 ? (posters.length-1) : right;
+		right = right === posters.length ? 0 : right;
+		console.log(left, " < >", right);
+		this.setState((state) => {
+			return {
+				carousel: {
+					left: left,
+					right: right
+				}
+			}
+		});
+		
+	}
+	
 	render() {
 		
-		const listOfVideos = this.props.home.videos.entries;
+		const listOfPosters = this.props.home.videos.entries;
 		
-		const renderPosters = (posters, limit) => {
-			if (typeof limit === 'undefined' || limit === 0) {
-				limit = posters.length
-			};
-			return posters.map((poster) => {
-				let i = 0;
-				while (i < limit) {
-					i++;
-					return (
-						<Poster key={i} poster={poster} />
-					)
+		const renderPosters = (posters, left, right) => {
+			const generateCarouselIndices = (length, lowerBound, upperBound) => {
+				// console.log("Getting lower and upper bounds of total items inside a carousel to allow for a recursively consistent number of items per carousel slide to be loaded regardless of total length of carousel items and returning an array of indices...");
+				let orderedIndex = lowerBound, carouselIndex = 0;
+				const tailsOfOrderedIndicesLoaded = lowerBound > upperBound;
+				let carouselIndices = [];
+				const reachedTheEndOfVideosList = length - 1;
+				const tailLength = tailsOfOrderedIndicesLoaded ? length - lowerBound : right;
+				for (carouselIndex = 0; carouselIndex < tailLength; carouselIndex++) {
+					carouselIndices.push(orderedIndex);
+					orderedIndex++;
 				}
-				
-			});
-		}
+				if (tailsOfOrderedIndicesLoaded) {
+					let headLength = upperBound;
+					orderedIndex = 0;
+					for (carouselIndex = 0; carouselIndex < headLength; carouselIndex++) {
+						carouselIndices.push(orderedIndex);
+						orderedIndex++;
+					}
+				}
+				return carouselIndices;
+			}
+			const posterIndices = generateCarouselIndices(posters.length, left, right);
+			return posterIndices.map((index) => {
+				return (
+					<Poster key={index} tabindex={index} poster={posters[index]} />
+				)
+			})
+		};
 		
-		const initialisePosters = () => {
-			const waitingForPostersToLoad = typeof listOfVideos === 'undefined' || listOfVideos.length === 0;
+		const initialisePosters = (posters, left, right) => {
+			const waitingForPostersToLoad = typeof posters === 'undefined' || posters.length === 0;
 			if (waitingForPostersToLoad) {
 				return (
 					<ul className="posters">
 						<span className="no-videos-loaded">
-							Loading videos...
+							<img className="loading-spinner" src={loadingSpinner} alt="Loading..." />
 						</span>
 					</ul>
 				)
 			} else {
 				return (
 					<ul className="posters">
-						{ renderPosters(listOfVideos, 6) }
+						{ renderPosters(posters, left, right) }
 					</ul>
 				)
 			}
@@ -53,10 +101,10 @@ class VideoCarousel extends Component {
 
 		return (
 			<div className="video-carousel">
-				{ initialisePosters() }
+				{ initialisePosters(listOfPosters, this.state.carousel.left, this.state.carousel.right) }
 				<div className="controls">
-					<FontAwesomeIcon icon={faArrowCircleLeft} className="left-arrow" />
-					<FontAwesomeIcon icon={faArrowCircleRight} className="right-arrow" />
+					<FontAwesomeIcon icon={faArrowCircleLeft} className="left-arrow" onClick={ () => this.shiftCarousel('left') } />
+					<FontAwesomeIcon icon={faArrowCircleRight} className="right-arrow" onClick={ () => this.shiftCarousel('right') } />
 				</div>
 			</div>
 		);
