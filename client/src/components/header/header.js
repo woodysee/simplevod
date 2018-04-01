@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-	// console.info("Mapping dispatch for props...")
+	// console.info("header: mapDispatchToProps()...")
 	// console.info(dispatch);
 	return {
 		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) }

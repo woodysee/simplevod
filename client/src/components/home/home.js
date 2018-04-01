@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // console.log("Importing Redux action-creators and thunks...");
+import { setCurrentPage } from '../../actions/mainActions';
 
 // console.log("Importing children components...");
 import Header from '../header/header.js';
@@ -13,23 +14,37 @@ import './home.css';
 
 const mapStateToProps = (state) => {
 	// console.info("home: mapStateToProps()");
-	// console.info(state);
+	// console.info(state.header);
 	return state;
+}
+
+const mapDispatchToProps = (dispatch) => {
+	// console.info("home: mapDispatchToProps()...")
+	// console.info(dispatch);
+	return {
+		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) }
+	}
 }
 
 class Home extends Component {
 	
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
 			currentPage: this.props.header.currentPage
 		}
 	};
 	
-	componentDidMount() {
+	setCurrentPage(page) {
+		if (page !== this.props.header.currentPage) {
+			this.props.setCurrentPage(page);
+		}
 	}
 	
 	render() {
+		
+		this.setCurrentPage('home'); // Initialise page state on load
+		
 		return (
 			<div className="Home">
 				<Header />
@@ -39,4 +54,4 @@ class Home extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

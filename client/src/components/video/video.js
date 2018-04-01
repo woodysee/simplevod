@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 
 // console.log("Importing Redux action-creators and thunks...");
+import { setCurrentPage } from '../../actions/mainActions';
 
 // console.log("Importing children components...");
 import Header from '../header/header.js';
@@ -25,10 +26,15 @@ import './video.css';
 
 const mapStateToProps = (state) => {
 	// console.info("video: mapStateToProps()");
-	// console.info(state);
+	// console.info(state.header);
+	return state;
+}
+
+const mapDispatchToProps = (dispatch) => {
+	// console.info("video: mapDispatchToProps()...")
+	// console.info(dispatch);
 	return {
-		header: state.header,
-		home: state.home,
+		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) }
 	}
 }
 
@@ -134,8 +140,15 @@ class Video extends Component {
 	ref = (player) => {
 		this.player = player
 	}
+	setCurrentPage(page) {
+		if (page !== this.props.header.currentPage) {
+			this.props.setCurrentPage(page);
+		}
+	}
 	
 	render() {
+		
+		this.setCurrentPage('video'); // Initialise page state on load
 		
 		const { url, playing, volume, muted, loop, played, duration, playbackRate } = this.state;
 		
@@ -161,7 +174,7 @@ class Video extends Component {
 		return (
 			<div className="Video">
 				<Header />
-				<div className="video-player-wrapper" onKeyDown={ (e) => this.playPauseViaKey(e) }>
+				<div className="video-player-wrapper" onKeyDown={ (e) => this.playPauseViaKey(e) } >
 					<ReactPlayer
 						className="video-player"
 						ref={ this.ref }
@@ -209,4 +222,4 @@ class Video extends Component {
 	
 }
 
-export default connect(mapStateToProps)(Video);
+export default connect(mapStateToProps, mapDispatchToProps)(Video);
