@@ -1,0 +1,53 @@
+.Header {
+	
+	.navbar, .left-side, .right-side {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+	}
+	
+	.navbar {
+		align-items: center;
+		-webkit-flex-wrap: wrap;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		justify-content: center;
+		margin: 0 auto;
+		text-align: center;
+	}
+	
+	.left-side, .right-side {
+		-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		padding: 5vh 10vw;
+		width: 50%;
+	}
+	
+	.title, .link {
+		color: #aaa;
+		font-size: 30px;
+		font-weight: 400;
+		letter-spacing: 5px;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+	
+	.left-side {
+		text-align: left;
+		
+		.title {
+			font-size: 60px;
+			font-weight: 300;
+		}
+		
+	}
+	
+	.right-side {
+		list-style: none;
+		text-align: right;
+	}
+	
+}
