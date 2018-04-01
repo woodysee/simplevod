@@ -15,9 +15,9 @@ class VideoCarousel extends Component {
 		super(props);
 		this.state = {
 			carousel: {
-				left: 0,
+				left: 40,
 				posterSelected: 10,
-				right: 30
+				right: 50
 			}
 		}
 	}
@@ -33,13 +33,16 @@ class VideoCarousel extends Component {
 		let left = this.state.carousel.left + direction;
 		let right = this.state.carousel.right + direction;
 		let posterSelected = this.state.carousel.posterSelected + direction;
+		
 		left = left === -1 ? (posters.length-1) : left;
 		left = left === posters.length ? 0 : left;
+		
 		right = right === -1 ? (posters.length-1) : right;
 		right = right === posters.length ? 0 : right;
+		
 		posterSelected = posterSelected === -1 ? (posters.length-1) : posterSelected;
 		posterSelected = posterSelected === posters.length ? 0 : posterSelected;
-		// console.log(left, posterSelected , right);
+		console.log(left, posterSelected , right);
 		this.setState((state) => {
 			return {
 				carousel: {
@@ -143,39 +146,30 @@ class VideoCarousel extends Component {
 			// console.log("This sets a ceiling for the right tail in the constructor above if bigger than actual length of posters received from response.");
 			const rightTailValueExceedsPostersLength = this.state.carousel.right >= this.props.home.videos.totalCount;
 			const leftTailValueExceedsPostersLength = this.state.carousel.left >= this.props.home.videos.totalCount;
-			const posterSelectedValueExceedsPosterLength = this.state.carousel.posterSelected >= this.props.home.videos.totalCount;
 			switch (true) {
 				case rightTailValueExceedsPostersLength && leftTailValueExceedsPostersLength:
 					this.setState({
 						carousel: {
-							left: 0,
-							posterSelected: this.props.home.videos.totalCount / 2,
-							right: this.props.home.videos.totalCount
-						}
-					});
-					break;
-				case posterSelectedValueExceedsPosterLength:
-					this.setState({
-						carousel: {
-							left: this.state.carousel.left,
-							posterSelected: this.state.carousel.posterSelected - 1,
-							right: this.state.carousel.right
+							left: this.state.carousel.left - 2,
+							posterSelected: this.state.carousel.posterSelected,
+							right: this.state.carousel.right - 2
 						}
 					});
 					break;
 				case rightTailValueExceedsPostersLength:
+					console.log(this.state.carousel.right);
 					this.setState({
 						carousel: {
 							left: this.state.carousel.left,
 							posterSelected: this.state.carousel.posterSelected,
-							right: this.state.carousel.right - 1
+							right: this.props.home.videos.totalCount - 2
 						}
 					});
 					break;
 				case leftTailValueExceedsPostersLength:
 					this.setState({
 						carousel: {
-							left: this.state.carousel.left - 1,
+							left: this.state.carousel.left - 2,
 							posterSelected: this.state.carousel.posterSelected,
 							right: this.state.carousel.right
 						}
