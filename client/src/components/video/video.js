@@ -1,9 +1,14 @@
+// console.log("Importing fundamental modules...");
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import { findDOMNode } from 'react-dom';
 import {
 	Redirect
 } from 'react-router-dom';
+import { connect } from 'react-redux';
+// console.log("Importing children components...");
+import Header from '../header/header.js';
+
 // console.log("Importing presentational modules...");
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlay from '@fortawesome/fontawesome-free-solid/faPlay.js';
@@ -117,6 +122,10 @@ class Video extends Component {
 		this.player = player
 	}
 	
+	componentWillMount() {
+		
+	}
+	
 	render() {
 		
 		const { url, playing, volume, muted, loop, played, loaded, duration, playbackRate } = this.state;
@@ -134,49 +143,52 @@ class Video extends Component {
 			// console.log("...it should go back to the previous page.");
 			return (
 				<Redirect to="/" />
-			)	
+			)
 		}
 		
 		return (
-			<div className="video-player-wrapper" onKeyDown={ (e) => this.playPauseViaKey(e) }>
-				<ReactPlayer
-					className="video-player"
-					ref={ this.ref }
-					width='100%'
-					height='100%'
-					url={ url }
-					playing={ playing }
-					loop={ loop }
-					playbackRate={ playbackRate }
-					volume={ volume }
-					muted={ muted }
-					onReady={ () => console.log('Video ready...') }
-					onStart={ () => console.log('...Video started.') }
-					onPlay={ this.onPlay }
-					onPause={ this.onPause }
-					onBuffer={ () => console.log('Buffering...') }
-					onSeek={ e => console.log('Seeking...', processTimeIntoMMSS(e)) }
-					onEnded={ this.onEnded }
-					onError={ e => console.log('Error:', e) }
-					onProgress={ this.onProgress }
-					onDuration={ this.onDuration }
-					onClick={ this.playPause }
-				/>
-				<FontAwesomeIcon className="mid-screen-playpause-icon" icon={ faPlayCircle } onClick={ this.playPause } />
-				<div className="video-player__controls">
-					<FontAwesomeIcon icon={playing ? faPause : faPlay} className="play-icon" onClick={ this.playPause } />
-					<div className="duration">
-						{ processTimeIntoMMSS(played * duration) } / { processTimeIntoMMSS(duration) }
-					</div>
-					<input
-						className="video-player__controls__progress-slider"
-						type='range' min={0} max={1} step='any'
-						value={played}
-						onMouseDown={this.onSeekMouseDown}
-						onChange={this.onSeekChange}
-						onMouseUp={this.onSeekMouseUp}
+			<div className="Video">
+				<Header />
+				<div className="video-player-wrapper" onKeyDown={ (e) => this.playPauseViaKey(e) }>
+					<ReactPlayer
+						className="video-player"
+						ref={ this.ref }
+						width='100%'
+						height='100%'
+						url={ url }
+						playing={ playing }
+						loop={ loop }
+						playbackRate={ playbackRate }
+						volume={ volume }
+						muted={ muted }
+						onReady={ () => console.log('Video ready...') }
+						onStart={ () => console.log('...Video started.') }
+						onPlay={ this.onPlay }
+						onPause={ this.onPause }
+						onBuffer={ () => console.log('Buffering...') }
+						onSeek={ e => console.log('Seeking...', processTimeIntoMMSS(e)) }
+						onEnded={ this.onEnded }
+						onError={ e => console.log('Error:', e) }
+						onProgress={ this.onProgress }
+						onDuration={ this.onDuration }
+						onClick={ this.playPause }
 					/>
-					<FontAwesomeIcon icon={ faExpand } className="full-screen-btn" onClick={this.onClickFullscreen} />
+					<FontAwesomeIcon className="mid-screen-playpause-icon" icon={ faPlayCircle } onClick={ this.playPause } />
+					<div className="video-player__controls">
+						<FontAwesomeIcon icon={playing ? faPause : faPlay} className="play-icon" onClick={ this.playPause } />
+						<div className="duration">
+							{ processTimeIntoMMSS(played * duration) } / { processTimeIntoMMSS(duration) }
+						</div>
+						<input
+							className="video-player__controls__progress-slider"
+							type='range' min={0} max={1} step='any'
+							value={played}
+							onMouseDown={this.onSeekMouseDown}
+							onChange={this.onSeekChange}
+							onMouseUp={this.onSeekMouseUp}
+						/>
+						<FontAwesomeIcon icon={ faExpand } className="full-screen-btn" onClick={this.onClickFullscreen} />
+					</div>
 				</div>
 			</div>
 		)
@@ -185,4 +197,13 @@ class Video extends Component {
 	
 }
 
-export default Video;
+const mapStateToProps = (state) => {
+	// console.info("Getting state for props...")
+	// console.info(state);
+	return {
+		header: state.header,
+		home: state.home,
+		video: this.state
+	}
+}
+export default connect(mapStateToProps)(Video);

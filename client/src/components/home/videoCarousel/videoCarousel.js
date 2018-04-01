@@ -15,9 +15,9 @@ class VideoCarousel extends Component {
 		super(props);
 		this.state = {
 			carousel: {
-				left: 40,
+				left: 0,
 				posterSelected: 10,
-				right: 50
+				right: 29
 			}
 		}
 	}
@@ -174,6 +174,9 @@ class VideoCarousel extends Component {
 							right: this.state.carousel.right
 						}
 					});
+					this.shiftCarousel('right');
+					this.shiftCarousel('right');
+					this.shiftCarousel('right');
 					break;
 				default:
 			}

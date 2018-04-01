@@ -1,3 +1,5 @@
+$colour-translucent-grey: rgba(89,89,89,0.8);
+
 .Header {
 	
 	.navbar, .left-side, .right-side {
@@ -26,8 +28,8 @@
 		width: 50%;
 	}
 	
-	.title, .link {
-		color: #aaa;
+	.title, .link, .back {
+		color: $colour-translucent-grey;
 		font-size: 30px;
 		font-weight: 400;
 		letter-spacing: 5px;
