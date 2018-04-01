@@ -6,6 +6,9 @@ import {
 	Redirect
 } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+// console.log("Importing Redux action-creators and thunks...");
+
 // console.log("Importing children components...");
 import Header from '../header/header.js';
 
@@ -19,6 +22,16 @@ import screenfull from 'screenfull';
 
 import './video.css';
 
+
+const mapStateToProps = (state) => {
+	// console.info("video: mapStateToProps()");
+	// console.info(state);
+	return {
+		header: state.header,
+		home: state.home,
+	}
+}
+
 // console.log("Courtesy of CookPete, developer of react-player: https://github.com/CookPete/react-player/blob/master/src/demo/App.js");
 
 class Video extends Component {
@@ -31,7 +44,6 @@ class Video extends Component {
 			volume: 0.8,
 			muted: false,
 			played: 0,
-			loaded: 0,
 			duration: 0,
 			playbackRate: 1.0,
 			loop: false
@@ -41,13 +53,14 @@ class Video extends Component {
 	load = (url) => {
 		this.setState({
 			url,
-			played: 0,
-			loaded: 0
+			played: 0
 		})
 	}
 	
 	componentDidMount() {
 		this.setState({ playing: this.state.playing });
+		console.info("Loading full screen playing on video load...");
+		// screenfull.request(findDOMNode(this.player));
 	}
 	
 	playPause = () => {
@@ -122,13 +135,9 @@ class Video extends Component {
 		this.player = player
 	}
 	
-	componentWillMount() {
-		
-	}
-	
 	render() {
 		
-		const { url, playing, volume, muted, loop, played, loaded, duration, playbackRate } = this.state;
+		const { url, playing, volume, muted, loop, played, duration, playbackRate } = this.state;
 		
 		const processTimeIntoMMSS = (rawTime) => {
 			const minutes = Math.floor(rawTime / 60);
@@ -141,6 +150,9 @@ class Video extends Component {
 		const videoHasFinished = played === 1;
 		if (videoHasFinished) {
 			// console.log("...it should go back to the previous page.");
+			// console.log("Setting page state...");
+			this.setCurrentPage('home');
+			// console.log("...and redirect back to the home page.");
 			return (
 				<Redirect to="/" />
 			)
@@ -197,13 +209,4 @@ class Video extends Component {
 	
 }
 
-const mapStateToProps = (state) => {
-	// console.info("Getting state for props...")
-	// console.info(state);
-	return {
-		header: state.header,
-		home: state.home,
-		video: this.state
-	}
-}
 export default connect(mapStateToProps)(Video);

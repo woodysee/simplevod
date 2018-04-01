@@ -9,6 +9,14 @@ import Poster from './poster/poster.js';
 import loadingSpinner from '../../../common/loading-spinner.gif';
 import './videoCarousel.css';
 
+const mapStateToProps = (state) => {
+	// console.info("Getting state for props...")
+	// console.info(state);
+	return {
+		home: state.home
+	}
+}
+
 class VideoCarousel extends Component {
 	
 	constructor(props) {
@@ -277,11 +285,4 @@ class VideoCarousel extends Component {
 	
 }
 
-const mapStateToProps = (state) => {
-	// console.info("Getting state for props...")
-	// console.info(state);
-	return {
-		home: state.home
-	}
-}
 export default connect(mapStateToProps)(VideoCarousel);

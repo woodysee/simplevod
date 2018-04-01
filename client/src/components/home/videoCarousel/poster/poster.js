@@ -1,10 +1,29 @@
 // console.log("Importing fundamental modules...");
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+
+// console.log("Importing Redux action-creators and thunks...");
+import { setCurrentPage } from '../../../../actions/mainActions';
+
 // console.log("Importing presentational modules...");
 import posterPlaceholder from '../../../../common/movie-placeholder.svg';
 import loadingSpinner from '../../../../common/loading-spinner.gif';
 import './poster.css';
+
+const mapStateToProps = (state) => {
+	// console.info("header: mapStateToProps()");
+	// console.info(state.header);
+	return state;
+}
+
+const mapDispatchToProps = (dispatch) => {
+	// console.info("Mapping dispatch for props...")
+	// console.info(dispatch);
+	return {
+		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) }
+	}
+}
 
 class Poster extends Component {
 	
@@ -29,8 +48,8 @@ class Poster extends Component {
 		}
 	}
 	
-	componentDidMount() {
-		// console.log(this.props);
+	setCurrentPage(page) {
+		this.props.setCurrentPage(page);
 	}
 	
 	render() {
@@ -79,7 +98,7 @@ class Poster extends Component {
 		return (
 			<li className="carousel-item">
 				<div className="poster" style={poster.style}></div>
-				<Link to={videoPlayer} className="video-link" href="#" test={poster.content.link}>
+				<Link to={videoPlayer} className="video-link" href="#" test={poster.content.link} onClick={ () => { this.setCurrentPage('video') } }>
 					<div className="content">
 						<h2>{poster.content.title}</h2>
 					</div>
@@ -91,4 +110,4 @@ class Poster extends Component {
 	
 }
 
-export default Poster;
+export default connect(mapStateToProps, mapDispatchToProps)(Poster);

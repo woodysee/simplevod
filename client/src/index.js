@@ -4,20 +4,19 @@ import Client from './components/client';
 import registerServiceWorker from './registerServiceWorker';
 
 // Actions
+import { setCurrentPage } from './actions/mainActions';
 import { getVideos } from './actions/getVideos';
 
 // Redux
 import { Provider } from 'react-redux';
 import { initaliseStore } from './store/store';
 
-// Redux: Actions
-
-
 // Initialising store
 const store = initaliseStore();
 
 // Load videos
 store.dispatch(getVideos());
+store.dispatch(setCurrentPage('init'));
 
 // Dispatching...
 
