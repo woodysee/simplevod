@@ -69,6 +69,21 @@ class Header extends Component {
 						)
 					}
 					break;
+				case 'history':
+					if (block === 'leftSide') {
+						return (
+							<Link className="title" to="/history" onClick={ () => { this.setCurrentPage('history') } } >
+								History
+							</Link>
+						)
+					} else if (block === 'rightSide') {
+						return (
+							<Link className="link" to="/" onClick={ () => { this.setCurrentPage('home') } }>
+								Home
+							</Link>
+						)
+					}
+					break;
 				default:
 			}
 		};

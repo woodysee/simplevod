@@ -9,6 +9,7 @@ import {
 // console.log("Importing children components...");
 import Home from './home/home.js';
 import Video from './video/video.js';
+import History from './history/history.js';
 
 // console.log("Importing presentational modules...");
 import './client.css';
@@ -20,6 +21,7 @@ class Client extends Component {
 				<Switch>
 					<Route exact path="/" component={Home} />
 					<Route exact path="/video/:id" component={Video} />
+					<Route exact path="/history" component={History} />
 				</Switch>
 			</Router>
 		);

@@ -7,26 +7,25 @@ import { setCurrentPage } from '../../actions/mainActions';
 
 // console.log("Importing children components...");
 import Header from '../header/header.js';
-import VideoCarousel from './videoCarousel/videoCarousel.js';
 
 // console.log("Importing presentational modules...");
-import './home.css';
+import './history.css';
 
 const mapStateToProps = (state) => {
-	// console.info("home: mapStateToProps()");
+	// console.info("history: mapStateToProps()");
 	// console.info(state.header);
 	return state;
 }
 
 const mapDispatchToProps = (dispatch) => {
-	// console.info("home: mapDispatchToProps()...")
+	// console.info("history: mapDispatchToProps()...")
 	// console.info(dispatch);
 	return {
 		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) }
 	}
 }
 
-class Home extends Component {
+class History extends Component {
 	
 	constructor(props) {
 		super(props);
@@ -41,21 +40,23 @@ class Home extends Component {
 		}
 	}
 	
-	shouldComponentUpdate() {
-		
-		return true;
-	}
-	
 	render() {
-		this.setCurrentPage('home'); // Initialise page state on load
+		this.setCurrentPage('history'); // Initialise page state on load
 		return (
-			<div className="Home">
+			<div className="History">
 				<Header />
-				<VideoCarousel />
+				<ul className="watched-videos">
+					<li className="watched-video">
+						Video 1
+					</li>
+					<li className="watched-video">
+						Video 2
+					</li>
+				</ul>
 			</div>
 		);
 		
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(History);

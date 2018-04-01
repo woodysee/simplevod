@@ -63,12 +63,6 @@ class Video extends Component {
 		})
 	}
 	
-	componentDidMount() {
-		this.setState({ playing: this.state.playing });
-		console.info("Loading full screen playing on video load...");
-		// screenfull.request(findDOMNode(this.player));
-	}
-	
 	playPause = () => {
 		this.setState({ playing: !this.state.playing })
 	}
@@ -146,10 +140,14 @@ class Video extends Component {
 		}
 	}
 	
+	componentDidMount() {
+		this.setState({ playing: this.state.playing });
+		console.info("Loading full screen playing on video load...");
+		screenfull.request(findDOMNode(this.player));
+	}
+	
 	render() {
-		
 		this.setCurrentPage('video'); // Initialise page state on load
-		
 		const { url, playing, volume, muted, loop, played, duration, playbackRate } = this.state;
 		
 		const processTimeIntoMMSS = (rawTime) => {

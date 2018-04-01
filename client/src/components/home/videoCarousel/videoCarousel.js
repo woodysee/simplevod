@@ -50,7 +50,7 @@ class VideoCarousel extends Component {
 		
 		posterSelected = posterSelected === -1 ? (posters.length-1) : posterSelected;
 		posterSelected = posterSelected === posters.length ? 0 : posterSelected;
-		console.log(left, posterSelected , right);
+		// console.log(left, posterSelected , right);
 		this.setState((state) => {
 			return {
 				carousel: {
