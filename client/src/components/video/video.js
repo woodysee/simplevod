@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import { findDOMNode } from 'react-dom';
+import {
+	Redirect
+} from 'react-router-dom';
 // console.log("Importing presentational modules...");
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faPlay from '@fortawesome/fontawesome-free-solid/faPlay.js';
@@ -18,11 +21,12 @@ class Video extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			url: "http://d2bqeap5aduv6p.cloudfront.net/project_coderush_640x360_521kbs_56min.mp4",
+			url: "https://www.youtube.com/watch?v=tE6fOsAc9FM&t=0s&list=PL28EjBbo6sgCId1pqTWFYLpzGpNd5kNeL&index=1",
 			playing: true,
 			volume: 0.8,
 			muted: false,
 			played: 0,
+			loaded: 0,
 			duration: 0,
 			playbackRate: 1.0,
 			loop: false
@@ -32,12 +36,13 @@ class Video extends Component {
 	load = (url) => {
 		this.setState({
 			url,
-			played: 0
+			played: 0,
+			loaded: 0
 		})
 	}
 	
 	componentDidMount() {
-		this.setState({ playing: !this.state.playing })
+		this.setState({ playing: this.state.playing });
 	}
 	
 	playPause = () => {
@@ -45,11 +50,7 @@ class Video extends Component {
 	}
 	
 	playPauseViaKey = (e) => {
-		console.log(e.keyCode);
-		console.log(e.key);
-		console.log(e.key);
 		if (e.keyCode === 32) {
-			console.log("space");
 			this.setState({ playing: !this.state.playing });	
 		}
 	}
@@ -115,9 +116,10 @@ class Video extends Component {
 	ref = (player) => {
 		this.player = player
 	}
+	
 	render() {
 		
-		const { url, playing, volume, muted, loop, played, duration, playbackRate } = this.state;
+		const { url, playing, volume, muted, loop, played, loaded, duration, playbackRate } = this.state;
 		
 		const processTimeIntoMMSS = (rawTime) => {
 			const minutes = Math.floor(rawTime / 60);
@@ -125,6 +127,14 @@ class Video extends Component {
 			const min = minutes >= 10 ? minutes : `0${minutes}`;
 			const sec = seconds >= 10 ? seconds : `0${seconds}`;
 			return min + ":" + sec;
+		}
+		
+		const videoHasFinished = played === 1;
+		if (videoHasFinished) {
+			// console.log("...it should go back to the previous page.");
+			return (
+				<Redirect to="/" />
+			)	
 		}
 		
 		return (
@@ -170,6 +180,7 @@ class Video extends Component {
 				</div>
 			</div>
 		)
+		
 	}
 	
 }

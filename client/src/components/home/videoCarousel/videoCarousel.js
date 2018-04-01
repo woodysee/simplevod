@@ -13,21 +13,21 @@ class VideoCarousel extends Component {
 	
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.state = {
 			carousel: {
-				posters: this.props.home.videos.entries,
-				totalLength: this.props.home.videos.totalCount,
 				left: 0,
 				posterSelected: 10,
-				right: 20
+				right: 30
 			}
 		}
-		console.log(this.state);
 	}
 	
 	shiftCarousel(direction) {
 		// console.log("Sets the upper and lower bounds of the current slide based on the direction to allow the user to shift through the carousel per poster in both directions...");
+		if (direction !== 'left' && direction !== 'right') {
+			// console.warn("...only left or right directions permitted. Exiting...");
+			return;
+		};
 		const posters = this.props.home.videos.entries;
 		direction = direction === 'left' ? -1 : 1;
 		let left = this.state.carousel.left + direction;
@@ -38,8 +38,8 @@ class VideoCarousel extends Component {
 		right = right === -1 ? (posters.length-1) : right;
 		right = right === posters.length ? 0 : right;
 		posterSelected = posterSelected === -1 ? (posters.length-1) : posterSelected;
-		posterSelected = posterSelected === posterSelected.length ? 0 : posterSelected;
-		// console.log(left, " < >", right);
+		posterSelected = posterSelected === posters.length ? 0 : posterSelected;
+		// console.log(left, posterSelected , right);
 		this.setState((state) => {
 			return {
 				carousel: {
@@ -103,7 +103,7 @@ class VideoCarousel extends Component {
 			case e.deltaY < 0:
 				wheelBehaviour = 'up';
 				break;
-			default: wheelBehaviour = 'static';
+			default: wheelBehaviour = 'none';
 		}
 		switch (wheelBehaviour) {
 			case 'right':
@@ -127,35 +127,82 @@ class VideoCarousel extends Component {
 	}
 	
 	componentDidMount() {
+		// console.log("componentDidMount(): This is invoked immediately after a component is mounted. Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, this is a good place to instantiate the network request.");
 		const carousel = document.getElementsByClassName('video-carousel')[0];
 		carousel.dispatchEvent(new Event('click'));
-		window.addEventListener("keydown", (e) => {
+		const evtListener = (e) => {
 			this.keyThroughCarousel(e);
-		}, false);
-		const rightTailValueContinuesToExceedPostersLength = this.state.carousel.right >= this.props.home.videos.totalCount;
-		if (rightTailValueContinuesToExceedPostersLength) {
-			this.setState({
-				carousel: {
-					left: 0,
-					right: this.props.home.videos.totalCount - 1
-				}
-			});
 		};
+		window.addEventListener("keydown", evtListener, false);
+	}
+	
+	shouldComponentUpdate() {
+		// console.log("shouldComponentUpdate");
+		if (this.props.home.videos.totalCount > 0) {
+			// console.log("...this.props has been loaded.");
+			// console.log("This sets a ceiling for the right tail in the constructor above if bigger than actual length of posters received from response.");
+			const rightTailValueExceedsPostersLength = this.state.carousel.right >= this.props.home.videos.totalCount;
+			const leftTailValueExceedsPostersLength = this.state.carousel.left >= this.props.home.videos.totalCount;
+			const posterSelectedValueExceedsPosterLength = this.state.carousel.posterSelected >= this.props.home.videos.totalCount;
+			switch (true) {
+				case rightTailValueExceedsPostersLength && leftTailValueExceedsPostersLength:
+					this.setState({
+						carousel: {
+							left: 0,
+							posterSelected: this.props.home.videos.totalCount / 2,
+							right: this.props.home.videos.totalCount
+						}
+					});
+					break;
+				case posterSelectedValueExceedsPosterLength:
+					this.setState({
+						carousel: {
+							left: this.state.carousel.left,
+							posterSelected: this.state.carousel.posterSelected - 1,
+							right: this.state.carousel.right
+						}
+					});
+					break;
+				case rightTailValueExceedsPostersLength:
+					this.setState({
+						carousel: {
+							left: this.state.carousel.left,
+							posterSelected: this.state.carousel.posterSelected,
+							right: this.state.carousel.right - 1
+						}
+					});
+					break;
+				case leftTailValueExceedsPostersLength:
+					this.setState({
+						carousel: {
+							left: this.state.carousel.left - 1,
+							posterSelected: this.state.carousel.posterSelected,
+							right: this.state.carousel.right
+						}
+					});
+					break;
+				default:
+			}
+
+			const indexOfPosterSelected = this.state.carousel.posterSelected;
+			const posterSelected = document.getElementsByClassName('carousel-item')[indexOfPosterSelected];
+			if (indexOfPosterSelected && typeof posterSelected !== 'undefined') {
+				// posterSelected.classList.addClass('focus');
+			}
+		}
+		return true;
 	}
 	
 	render() {
 		
 		const listOfPosters = this.props.home.videos.entries;
 		const posterSelected = this.state.carousel.posterSelected; // The poster to be focused
+		
 		const renderPosters = (posters, left, right) => {
-			right = right >= posters.length ? posters.length - 1 : right;
-			if (right >= posters.length) {
-				
-			}
 			const generateCarouselIndices = (length, lowerBound, upperBound) => {
 				// console.log("Getting lower and upper bounds of total items inside a carousel to allow for a recursively consistent number of items per carousel slide to be loaded regardless of total length of carousel items and returning an array of indices...");
-				right = right >= posters.length ? posters.length - 1 : right; // Check if initial right tail value is more than the length of posters
-				console.log(length);
+				right = right >= length ? length - 1 : right; // Check if initial right tail value is more than the length of posters
+				// console.log(length);
 				let orderedIndex = lowerBound, carouselIndex = 0;
 				const tailsOfOrderedIndicesLoaded = lowerBound > upperBound;
 				const rangeInsideOrderedIndices = upperBound > lowerBound && upperBound < length;
@@ -185,7 +232,7 @@ class VideoCarousel extends Component {
 				return carouselIndices;
 			}
 			const posterIndices = generateCarouselIndices(posters.length, left, right);
-			console.log(posterIndices);
+			// console.log(posterIndices);
 			return posterIndices.map((index) => {
 				return (
 					<Poster key={index} poster={posters[index]} focused={ index === posterSelected }  />
@@ -225,7 +272,10 @@ class VideoCarousel extends Component {
 	}
 	
 	componentWillUnmount() {
-
+		const evtListener = (e) => {
+			this.keyThroughCarousel(e);
+		};
+		window.removeEventListener("keydown", evtListener, false);
 	}
 	
 }
