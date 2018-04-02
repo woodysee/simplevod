@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const homeController = require('../controllers/home');
+const videosController = require('../controllers/videos');
+const historiesController = require('../controllers/histories');
 	
-router.get('/videos', homeController.getVideos);
+router.get('/videos', videosController.getVideos);
+router.get('/history', videosController.showWatchRecords);
+router.post('/history/create', videosController.createWatchRecord);
 
 module.exports = router;
