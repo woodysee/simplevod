@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 const uuidv4 = require('uuid/v4');
-
 const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
-  id: uuidv4(),
-  name: { type: String, unique: true },
-  email: { type: String, unique: true },
+const userSchema = new Schema({
+  id: { type: String, unique: true },
+  name: { type: String },
+  email: { type: String },
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

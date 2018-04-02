@@ -5,7 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Actions
 import { setCurrentPage } from './actions/mainActions';
-import { getVideos } from './actions/getVideos';
+import { getInternalVideos } from './actions/getVideos';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -15,7 +15,7 @@ import { initaliseStore } from './store/store';
 const store = initaliseStore();
 
 // Load videos
-store.dispatch(getVideos());
+store.dispatch(getInternalVideos());
 store.dispatch(setCurrentPage('init'));
 
 // Dispatching...

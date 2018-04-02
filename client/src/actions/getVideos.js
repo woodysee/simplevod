@@ -25,3 +25,25 @@ export const getVideos = () => {
 		});
 	};
 };
+
+export const getInternalVideos = () => {
+	return (dispatch) => {
+		axios.get(`/api/internal-videos`, {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			withCredentials: true,
+			credentials: 'same-origin'
+		}).then((response) => {
+			console.log(response.data);
+			const videos = {
+				totalCount: response.data.length,
+				entries: response.data
+			};
+			dispatch(loadVideos(videos));
+		}).catch((error)=> {
+			console.error('Unable to retrieve list of videos from Simple VOD\'s own data store -', error);
+		});
+	};
+};
