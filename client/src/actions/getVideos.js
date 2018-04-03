@@ -27,6 +27,7 @@ export const getVideo = (id) => {
 			// console.log(response.data);
 			const video = response.data;
 			dispatch(loadVideo(video));
+			return video;
 		}).catch((error)=> {
 			console.error('Unable to retrieve video from external source via Simple VOD\'s proxy server -', error);
 		});
@@ -60,7 +61,7 @@ export const getInternalVideos = () => {
 			withCredentials: true,
 			credentials: 'same-origin'
 		}).then((response) => {
-			console.log(response.data);
+			// console.log(response.data);
 			const videos = {
 				totalCount: response.data.length,
 				entries: response.data

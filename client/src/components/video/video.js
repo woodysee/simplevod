@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 // console.log("Importing Redux action-creators and thunks...");
 import { setCurrentPage } from '../../actions/mainActions';
 import { createViewingRecord } from '../../actions/viewingHistory';
+import { getVideo } from '../../actions/getVideos';
 
 // console.log("Importing children components...");
 import Header from '../header/header.js';
@@ -35,7 +36,8 @@ const mapDispatchToProps = (dispatch) => {
 	// console.info(dispatch);
 	return {
 		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) },
-		createViewingRecord: (record) => { dispatch(createViewingRecord(record)) }
+		createViewingRecord: (record) => { dispatch(createViewingRecord(record)) },
+		getVideo: (id) => { dispatch(getVideo(id)) }
 	}
 }
 
@@ -46,7 +48,7 @@ class Video extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			url: this.props.video.video.contents[0].url || "",
+			url: "",
 			playing: true,
 			volume: 0.8,
 			muted: false,
@@ -55,6 +57,7 @@ class Video extends Component {
 			playbackRate: 1.0,
 			loop: false
 		}
+		this.props.getVideo(this.props.match.params.id);
 	}
 	
 	load = (url) => {
@@ -140,13 +143,30 @@ class Video extends Component {
 			this.props.setCurrentPage(page);
 		}
 	}
-	
+
 	componentDidMount() {
-		
 		this.setState({ playing: this.state.playing });
 		console.info("Loading full screen playing on video load...");
-		screenfull.request(findDOMNode(this.player));
-		this.props.createViewingRecord();
+		this.onClickFullscreen();
+		// this.props.createViewingRecord();
+	}
+	
+	shouldComponentUpdate(nextProps) {
+		if (typeof this.props.video.video.contents !== "undefined" && this.state.url !== this.props.video.video.contents[0].url) {
+			// console.log(this.props.video.video.contents[0].url);
+			this.setState({
+				url: this.props.video.video.contents[0].url,
+				playing: true,
+				volume: 0.8,
+				muted: false,
+				played: 0,
+				duration: 0,
+				playbackRate: 1.0,
+				loop: false
+			});
+			return false;
+		}
+		return true;
 	}
 	
 	render() {
