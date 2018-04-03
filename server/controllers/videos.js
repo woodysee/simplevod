@@ -1,6 +1,26 @@
 const https = require("https");
 const Video = require('../models/Video');
 
+exports.getInternalVideo = (req, res, next) => {
+	// console.log("getInternalVideo(): Gets video data and metadata from internal database.");
+	const data = req.params;
+	console.log(data);
+	Video.
+		findOne({ 'id': data.id }).
+		exec((error, video) => {
+			if (error) {
+				return res.status(406).send(error);
+			}
+			if (typeof video !== "undefined") {
+				res.status(200).json(video);
+				res.end();
+			} else {
+				res.status(204).send('No internal videos found');
+				return;
+			}
+		});
+}
+
 exports.getVideos = (req, res, next) => {
 	// console.log("getVideos(): Gets video data and metadata from external API.");
 	

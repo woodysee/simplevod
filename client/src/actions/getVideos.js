@@ -15,6 +15,24 @@ export const loadVideos = (videos) => {
 	}
 };
 
+export const getVideo = (id) => {
+	return (dispatch) => {
+		axios.get(`/api/internal/video/${id}`, {
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			withCredentials: true,
+			credentials: 'same-origin'
+		}).then((response) => {
+			// console.log(response.data);
+			const video = response.data;
+			dispatch(loadVideo(video));
+		}).catch((error)=> {
+			console.error('Unable to retrieve video from external source via Simple VOD\'s proxy server -', error);
+		});
+	}
+}
+
 export const getVideos = () => {
 	return (dispatch) => {
 		axios.get(`/api/videos`, {
@@ -35,7 +53,7 @@ export const getVideos = () => {
 
 export const getInternalVideos = () => {
 	return (dispatch) => {
-		axios.get(`/api/internal-videos`, {
+		axios.get(`/api/internal/videos`, {
 			headers: {
 				'Content-Type': 'application/json'
 			},

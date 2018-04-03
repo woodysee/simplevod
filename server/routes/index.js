@@ -5,7 +5,8 @@ const videosController = require('../controllers/videos');
 const viewingHistoryController = require('../controllers/viewingHistory');
 	
 router.get('/videos', videosController.getVideos);
-router.get('/internal-videos', videosController.getInternalVideos);
+router.get('/internal/video/:id', videosController.getInternalVideo);
+router.get('/internal/videos', videosController.getInternalVideos);
 router.get('/history', viewingHistoryController.getViewingHistory);
 router.post('/history/create', viewingHistoryController.createViewingRecord);
 
