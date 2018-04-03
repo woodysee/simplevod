@@ -22,6 +22,7 @@ export const createViewingRecord = (video, played) => {
 			withCredentials: true,
 			credentials: 'same-origin'
 		}).then((response) => {
+			console.log("...Viewing record saved:");
 			console.log(response);
 		}).catch((error)=> {
 			console.error('Unable to retrieve list of videos from external source via Simple VOD\'s proxy server -', error);

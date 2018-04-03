@@ -55,7 +55,8 @@ class Video extends Component {
 			played: 0,
 			duration: 0,
 			playbackRate: 1.0,
-			loop: false
+			loop: false,
+			viewingRecord: 0
 		}
 		this.props.getVideo(this.props.match.params.id);
 	}
@@ -147,24 +148,30 @@ class Video extends Component {
 	componentDidMount() {
 		this.setState({ playing: this.state.playing });
 		console.info("Loading full screen playing on video load...");
-		this.onClickFullscreen();
-		// this.props.createViewingRecord();
+		screenfull.request(findDOMNode(this.player));
 	}
 	
 	shouldComponentUpdate(nextProps) {
-		if (typeof this.props.video.video.contents !== "undefined" && this.state.url !== this.props.video.video.contents[0].url) {
-			// console.log(this.props.video.video.contents[0].url);
-			this.setState({
-				url: this.props.video.video.contents[0].url,
-				playing: true,
-				volume: 0.8,
-				muted: false,
-				played: 0,
-				duration: 0,
-				playbackRate: 1.0,
-				loop: false
-			});
-			return false;
+		if (nextProps !== this.props) {
+			const videoLoaded = typeof nextProps.video.video.contents !== "undefined";
+			const viewingRecordNotYetCreated = this.state.viewingRecord < 1;
+			if (videoLoaded) {
+				let urlHasNotChanged = this.state.url !== nextProps.video.video.contents[0].url;
+				if (urlHasNotChanged) {
+					this.setState({
+						url: nextProps.video.video.contents[0].url
+					});
+					return false;
+				}
+			}
+			if (videoLoaded && viewingRecordNotYetCreated) {
+				const addOne = this.state.viewingRecord + 1;
+				this.setState({
+					viewingRecord: addOne
+				});
+				this.props.createViewingRecord(this.props.video.video);
+				return true;
+			}
 		}
 		return true;
 	}
