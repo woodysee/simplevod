@@ -38,7 +38,11 @@ const videoSchema = new Schema({
 	},
 	id: {
 		type: String
-	}
+	},
+	viewingHistory: [{
+		type: Schema.Types.ObjectId,
+		ref: 'ViewingRecord'
+	}]
 });
 
 const Video = mongoose.model('Video', videoSchema);

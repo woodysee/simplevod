@@ -1,4 +1,5 @@
 $colour-translucent-grey: rgba(89,89,89,0.8);
+$colour-lime: #8cc63f;
 
 .Header {
 	
@@ -35,6 +36,10 @@ $colour-translucent-grey: rgba(89,89,89,0.8);
 		letter-spacing: 5px;
 		text-decoration: none;
 		text-transform: uppercase;
+	}
+	
+	.link:hover, .back:hover {
+		color: $colour-lime;
 	}
 	
 	.left-side {

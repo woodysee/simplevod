@@ -8,12 +8,14 @@ export const showViewingHistory = (records) => {
 }
 
 export const createViewingRecord = (video, played) => {
-	// console.log(record);
+	console.log(record);
 	const record = {
 		ref: video.id,
 		url: video.contents[0].url,
+		video: video,
 		played: 0
 	};
+	console.log(record);
 	return (dispatch) => {
 		axios.post(`/api/history/create`, record, {
 			headers: {
@@ -39,9 +41,10 @@ export const getViewingHistory = () => {
 			withCredentials: true,
 			credentials: 'same-origin'
 		}).then((response) => {
-			// console.log(response.data);
 			const records = response.data;
+			console.log(records);
 			dispatch(showViewingHistory(records));
+			return records;
 		}).catch((error)=> {
 			console.error('Unable to retrieve list of videos from external source via Simple VOD\'s proxy server -', error);
 		});

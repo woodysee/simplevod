@@ -56,7 +56,7 @@ class Video extends Component {
 			duration: 0,
 			playbackRate: 1.0,
 			loop: false,
-			viewingRecord: 0
+			viewingRecord: false
 		}
 		this.props.getVideo(this.props.match.params.id);
 	}
@@ -120,7 +120,10 @@ class Video extends Component {
 	}
 	onEnded = () => {
 		// console.log('onEnded')
-		this.setState({ playing: this.state.loop })
+		this.setState({
+			viewingRecord: false,
+			playing: this.state.loop
+		})
 	}
 	onDuration = (duration) => {
 		// console.log('onDuration', duration)
@@ -148,13 +151,13 @@ class Video extends Component {
 	componentDidMount() {
 		this.setState({ playing: this.state.playing });
 		console.info("Loading full screen playing on video load...");
-		screenfull.request(findDOMNode(this.player));
+		// screenfull.request(findDOMNode(this.player));
 	}
 	
-	shouldComponentUpdate(nextProps) {
+	createViewingRecord(nextProps) {
 		if (nextProps !== this.props) {
 			const videoLoaded = typeof nextProps.video.video.contents !== "undefined";
-			const viewingRecordNotYetCreated = this.state.viewingRecord < 1;
+			const viewingRecordNotYetCreated = !this.state.viewingRecord;
 			if (videoLoaded) {
 				let urlHasNotChanged = this.state.url !== nextProps.video.video.contents[0].url;
 				if (urlHasNotChanged) {
@@ -165,15 +168,19 @@ class Video extends Component {
 				}
 			}
 			if (videoLoaded && viewingRecordNotYetCreated) {
-				const addOne = this.state.viewingRecord + 1;
 				this.setState({
-					viewingRecord: addOne
+					viewingRecord: true
 				});
+				// console.log(this.props.video.video);
 				this.props.createViewingRecord(this.props.video.video);
 				return true;
 			}
 		}
 		return true;
+	}
+	
+	shouldComponentUpdate(nextProps) {
+		return this.createViewingRecord(nextProps);
 	}
 	
 	render() {
@@ -245,6 +252,13 @@ class Video extends Component {
 			</div>
 		)
 		
+	}
+	
+	componentWillUnmount() {
+		// allows future recording of view history upon video close
+		this.setState({
+			viewingRecord: false
+		});
 	}
 	
 }

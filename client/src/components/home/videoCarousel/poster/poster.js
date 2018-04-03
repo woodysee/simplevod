@@ -53,8 +53,8 @@ class Poster extends Component {
 	}
 	
 	setCurrentPage(page, poster) {
-		// console.log(this.props.poster);	``
-		// this.props.createViewingRecord(this.props.poster, 0);
+		// console.log(this.props.poster);
+		this.props.createViewingRecord(this.props.poster);
 		this.props.loadVideo(this.props.poster);
 		this.props.setCurrentPage(page);
 	}

@@ -1,3 +1,4 @@
+const uuidv4 = require('uuid/v4');
 const ViewingRecord = require('../models/ViewingRecord');
 
 exports.createViewingRecord = (req, res) => {
@@ -16,15 +17,19 @@ exports.createViewingRecord = (req, res) => {
 		res.status(403).send({status: 403, error: "Missing video watched percentage, i.e. `played`."});
 		return;
 	}
-	viewingRecord.ref = data.id,
+	viewingRecord.id = uuidv4();
+	viewingRecord.ref = data.ref,
 	viewingRecord.url = data.url,
 	viewingRecord.played = data.played;
+	viewingRecord.video = data.video;
 	viewingRecord.updated = Date.now();
+	// console.log(viewingRecord);
 	viewingRecord.save((err, viewingRecord) => {
 		if (err) {
 			res.status(406).send({status: 406, error: err});
 			return;
 		}
+		
 		// console.log(viewingRecord);
 		res.status(200).json(viewingRecord);
 		res.end();
@@ -39,19 +44,25 @@ exports.getViewingHistory = (req, res, next) => {
 	
 	ViewingRecord.
 		find().
+		populate({
+			path: 'videos',
+			select: 'name'
+		}).
 		limit(limit).
 		sort(orderBy).
 		exec((error, viewingRecords) => {
-		if (error) {
-			res.status(406).json({status: 406, error: error});
-			return;
+			if (error) {
+				res.status(406).json({status: 406, error: error});
+				return;
+			}
+			console.log(viewingRecords);
+			if (viewingRecords.length > 0) {
+				res.status(200).json(viewingRecords);
+				res.end();
+			} else {
+				res.status(204).send({status: 204, error: "No viewing record found."});
+				return;
+			}
 		}
-		if (viewingRecords.length > 0) {
-			res.status(200).json(viewingRecords);
-			res.end();
-		} else {
-			res.status(204).send({status: 204, error: "No viewing record found."});
-			return;
-		}
-	});
+	);
 };

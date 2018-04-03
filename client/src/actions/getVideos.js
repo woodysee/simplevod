@@ -46,6 +46,7 @@ export const getVideos = () => {
 			// console.log(response.data);
 			const videos = response.data;
 			dispatch(loadVideos(videos));
+			return videos;
 		}).catch((error)=> {
 			console.error('Unable to retrieve list of videos from external source via Simple VOD\'s proxy server -', error);
 		});

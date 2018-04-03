@@ -7,10 +7,3 @@ export const setCurrentPage = (page) => {
 		page: page
 	}
 };
-
-export const mainActions = (text) => {
-	return {
-		type: 'TEST_ACTION',
-		text
-	}
-};
