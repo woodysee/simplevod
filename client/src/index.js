@@ -5,7 +5,6 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Actions
 import { setCurrentPage } from './actions/mainActions';
-import { getViewingHistory } from './actions/viewingHistory';
 import { getInternalVideos } from './actions/getVideos';
 
 // Redux

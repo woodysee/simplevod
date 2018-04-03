@@ -85,8 +85,8 @@ class History extends Component {
 
 				}
 				return (
-					<li className="watched-video">
-						<Link className="link" key={record.id} to={videoPage}>
+					<li className="watched-video" key={record.id}>
+						<Link className="link" to={videoPage}>
 							{ record.video[0].title }
 						</Link>
 						<br />
