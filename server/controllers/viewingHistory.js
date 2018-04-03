@@ -31,7 +31,7 @@ exports.createViewingRecord = (req, res) => {
 	});
 };
 
-exports.showViewingHistory = (req, res, next) => {
+exports.getViewingHistory = (req, res, next) => {
 	const data = req.query;
 	// console.log(data);
 	const limit = parseInt(data.limit) || 0;

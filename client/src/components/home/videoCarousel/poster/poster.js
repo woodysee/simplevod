@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 // console.log("Importing Redux action-creators and thunks...");
 import { setCurrentPage } from '../../../../actions/mainActions';
+import { createViewingRecord } from '../../../../actions/viewingHistory';
+import { loadVideo } from '../../../../actions/getVideos';
 
 // console.log("Importing presentational modules...");
 import posterPlaceholder from '../../../../common/movie-placeholder.svg';
@@ -21,7 +23,9 @@ const mapDispatchToProps = (dispatch) => {
 	// console.info("Mapping dispatch for props...")
 	// console.info(dispatch);
 	return {
-		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) }
+		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) },
+		createViewingRecord: (record) => { dispatch(createViewingRecord(record)) },
+		loadVideo: (video) => { dispatch(loadVideo(video)) }
 	}
 }
 
@@ -48,7 +52,10 @@ class Poster extends Component {
 		}
 	}
 	
-	setCurrentPage(page) {
+	setCurrentPage(page, poster) {
+		// console.log(this.props.poster);	``
+		// this.props.createViewingRecord(this.props.poster, 0);
+		this.props.loadVideo(this.props.poster);
 		this.props.setCurrentPage(page);
 	}
 	
@@ -98,7 +105,7 @@ class Poster extends Component {
 		return (
 			<li className="carousel-item">
 				<div className="poster" style={poster.style}></div>
-				<Link to={videoPlayer} className="video-link" href="#" test={poster.content.link} onClick={ () => { this.setCurrentPage('video') } }>
+				<Link to={videoPlayer} className="video-link" href="#" onClick={ () => { this.setCurrentPage('video', this.state.poster) } }>
 					<div className="content">
 						<h2>{poster.content.title}</h2>
 					</div>

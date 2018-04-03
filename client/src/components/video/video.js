@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 // console.log("Importing Redux action-creators and thunks...");
 import { setCurrentPage } from '../../actions/mainActions';
+import { createViewingRecord } from '../../actions/viewingHistory';
 
 // console.log("Importing children components...");
 import Header from '../header/header.js';
@@ -26,7 +27,6 @@ import './video.css';
 
 const mapStateToProps = (state) => {
 	// console.info("video: mapStateToProps()");
-	// console.info(state.header);
 	return state;
 }
 
@@ -34,7 +34,8 @@ const mapDispatchToProps = (dispatch) => {
 	// console.info("video: mapDispatchToProps()...")
 	// console.info(dispatch);
 	return {
-		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) }
+		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) },
+		createViewingRecord: (record) => { dispatch(createViewingRecord(record)) }
 	}
 }
 
@@ -45,7 +46,7 @@ class Video extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			url: "https://www.youtube.com/watch?v=tE6fOsAc9FM&t=0s&list=PL28EjBbo6sgCId1pqTWFYLpzGpNd5kNeL&index=1",
+			url: this.props.video.video.contents[0].url || "",
 			playing: true,
 			volume: 0.8,
 			muted: false,
@@ -141,15 +142,16 @@ class Video extends Component {
 	}
 	
 	componentDidMount() {
+		
 		this.setState({ playing: this.state.playing });
 		console.info("Loading full screen playing on video load...");
 		screenfull.request(findDOMNode(this.player));
+		this.props.createViewingRecord();
 	}
 	
 	render() {
 		this.setCurrentPage('video'); // Initialise page state on load
 		const { url, playing, volume, muted, loop, played, duration, playbackRate } = this.state;
-		
 		const processTimeIntoMMSS = (rawTime) => {
 			const minutes = Math.floor(rawTime / 60);
 			const seconds = Math.floor(rawTime % 60);

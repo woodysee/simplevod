@@ -1,5 +1,13 @@
 import axios from 'axios';
 
+export const loadVideo = (video) => {
+	// console.log(video);
+	return {
+		type: 'LOAD_VIDEO',
+		video: video
+	}
+};
+
 export const loadVideos = (videos) => {
 	return {
 		type: "LOAD_VIDEOS",
@@ -11,7 +19,6 @@ export const getVideos = () => {
 	return (dispatch) => {
 		axios.get(`/api/videos`, {
 			headers: {
-				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
 			withCredentials: true,
@@ -30,7 +37,6 @@ export const getInternalVideos = () => {
 	return (dispatch) => {
 		axios.get(`/api/internal-videos`, {
 			headers: {
-				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
 			withCredentials: true,

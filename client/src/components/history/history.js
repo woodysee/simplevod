@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 // console.log("Importing Redux action-creators and thunks...");
 import { setCurrentPage } from '../../actions/mainActions';
+import { showViewingHistory } from '../../actions/viewingHistory';
 
 // console.log("Importing children components...");
 import Header from '../header/header.js';
@@ -21,7 +22,8 @@ const mapDispatchToProps = (dispatch) => {
 	// console.info("history: mapDispatchToProps()...")
 	// console.info(dispatch);
 	return {
-		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) }
+		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) },
+		showViewingHistory: (records) => { dispatch(showViewingHistory(records)) }
 	}
 }
 
@@ -40,8 +42,26 @@ class History extends Component {
 		}
 	}
 	
+	componentDidMount() {
+		const viewingHistory = this.props.showViewingHistory();
+		console.log(viewingHistory);
+		const initialiseWatchHistory = () => {
+			return viewingHistory.map((viewingRecord) => {
+				return (
+					<div>
+						{ viewingRecord.ref }
+					</div>
+				)
+			});
+		};
+		return (
+			{ initialiseWatchHistory }
+		)
+	}
+	
 	render() {
 		this.setCurrentPage('history'); // Initialise page state on load
+		
 		return (
 			<div className="History">
 				<Header />
