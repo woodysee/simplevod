@@ -52,7 +52,7 @@ npm start
 
 ### Development
 
-- `/client`: React-Redux Frontend web application.
+- `/client`: React-Redux Frontend web application generated from https://github.com/facebook/create-react-app
   - All CSS files are automatically compiled from SCSS files. Make style changes in the SCSS files.
   - In `/client/package.json`, if you want to develop remotely, set `proxy` to `server` to allow client and server to request and respond to each other. Source: https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#configuring-the-proxy-manually
 
