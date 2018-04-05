@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"proxy": {
 		"/api": {
-			"target": "http://woodys-mac-pro.local:3001",
+			"target": "localhost:3001",
 			"ws": true
 		}
 	},
