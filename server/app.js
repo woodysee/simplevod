@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 // Configure .env path
 dotenv.config();
