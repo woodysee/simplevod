@@ -188,12 +188,6 @@ class VideoCarousel extends Component {
 					break;
 				default:
 			}
-
-			const indexOfPosterSelected = this.state.carousel.posterSelected;
-			const posterSelected = document.getElementsByClassName('carousel-item')[indexOfPosterSelected];
-			if (indexOfPosterSelected && typeof posterSelected !== 'undefined') {
-				// posterSelected.classList.addClass('focus');
-			}
 		}
 		return true;
 	}

@@ -25,7 +25,7 @@ $carousel-item__scale: 1.6;
 			width: 100%;
 		}
 		
-		&:hover, &:focus, .focus {
+		&:hover, &:focus, &.focus {
 			height: ($carousel-poster-height * $carousel-item__scale) + px;
 			margin-top: 0px;
 			overflow: hidden;
