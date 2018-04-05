@@ -52,7 +52,7 @@ class Poster extends Component {
 		}
 	}
 	
-	setCurrentPage(page, poster) {
+	setCurrentPage(page) {
 		// console.log(this.props.poster);
 		this.props.createViewingRecord(this.props.poster);
 		this.props.loadVideo(this.props.poster);
@@ -105,7 +105,7 @@ class Poster extends Component {
 		return (
 			<li className="carousel-item">
 				<div className="poster" style={poster.style}></div>
-				<Link to={videoPlayer} className="video-link" href="#" onClick={ () => { this.setCurrentPage('video', this.state.poster) } }>
+				<Link to={videoPlayer} className="video-link" onClick={ () => { this.setCurrentPage('video', this.state.poster) } }>
 					<div className="content">
 						<h2>{poster.content.title}</h2>
 					</div>

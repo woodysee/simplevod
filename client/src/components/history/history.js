@@ -44,6 +44,12 @@ class History extends Component {
 		this.props.getViewingHistory();
 	};
 	
+	goToCurrentPage(page, video) {
+		this.props.createViewingRecord(video);
+		this.props.loadVideo(video);
+		this.props.setCurrentPage(page);
+	}
+	
 	setCurrentPage(page) {
 		if (page !== this.props.header.currentPage) {
 			this.props.setCurrentPage(page);
@@ -71,11 +77,12 @@ class History extends Component {
 	}
 	
 	render() {
+		
 		this.setCurrentPage('history'); // Initialise page state on load
 		
 		const renderRecords = (records) => {
 			return records.map((record) => {
-				const videoPage = '/videos/' + record.ref;
+				const videoPage = '/video/' + record.ref;
 				const generateRoles = (record) => {
 					return (
 						<div className="credit">
@@ -86,7 +93,7 @@ class History extends Component {
 				}
 				return (
 					<li className="watched-video" key={record.id}>
-						<Link className="link" to={videoPage}>
+						<Link className="link" to={videoPage} onClick={ () => { this.setCurrentPage('video', record.video[0]) } }>
 							{ record.video[0].title }
 						</Link>
 						<br />

@@ -151,7 +151,7 @@ class Video extends Component {
 	componentDidMount() {
 		this.setState({ playing: this.state.playing });
 		console.info("Loading full screen playing on video load...");
-		// screenfull.request(findDOMNode(this.player));
+		screenfull.request(findDOMNode(this.player));
 	}
 	
 	createViewingRecord(nextProps) {
