@@ -1,6 +1,15 @@
 // console.log("Importing fundamental modules...");
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {
+	Redirect
+} from 'react-router-dom';
+
+// console.log("Importing Redux action-creators and thunks...");
+import { setCurrentPage } from '../../../actions/mainActions';
+import { createViewingRecord } from '../../../actions/viewingHistory';
+import { loadVideo } from '../../../actions/getVideos';
+
 // console.log("Importing presentational modules...");
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faArrowCircleLeft from '@fortawesome/fontawesome-free-solid/faArrowCircleLeft.js';
@@ -12,8 +21,16 @@ import './videoCarousel.css';
 const mapStateToProps = (state) => {
 	// console.info("Getting state for props...")
 	// console.info(state);
+	return state
+}
+
+const mapDispatchToProps = (dispatch) => {
+	// console.info("Mapping dispatch for props...")
+	// console.info(dispatch);
 	return {
-		home: state.home
+		setCurrentPage: (page) => { dispatch(setCurrentPage(page)) },
+		createViewingRecord: (record) => { dispatch(createViewingRecord(record)) },
+		loadVideo: (video) => { dispatch(loadVideo(video)) }
 	}
 }
 
@@ -63,9 +80,20 @@ class VideoCarousel extends Component {
 		
 	}
 	
+	setCurrentPage(page) {
+		const i = this.state.carousel.posterSelected;
+		const poster = this.props.home.videos.entries[i];
+		const posterEl = document.getElementsByClassName("video-link")[i];
+		this.props.createViewingRecord(poster);
+		this.props.loadVideo(poster);
+		this.props.setCurrentPage(page);
+		posterEl.click();
+	}
+	
 	keyThroughCarousel(e) {
 
 		let direction;
+		// console.log(e.key);
 		switch (e.key) {
 			case 'ArrowRight':
 				direction = 'right';
@@ -84,6 +112,12 @@ class VideoCarousel extends Component {
 				break;
 			case 'a':
 				direction = 'left';
+				break;
+			case 'Enter':
+				this.setCurrentPage('video');
+				break;
+			case ' ':
+				this.setCurrentPage('video');
 				break;
 			default:
 		}
@@ -188,6 +222,7 @@ class VideoCarousel extends Component {
 					break;
 				default:
 			}
+			return true;
 		}
 		return true;
 	}
@@ -279,4 +314,4 @@ class VideoCarousel extends Component {
 	
 }
 
-export default connect(mapStateToProps)(VideoCarousel);
+export default connect(mapStateToProps, mapDispatchToProps)(VideoCarousel);
