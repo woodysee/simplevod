@@ -40,7 +40,7 @@ exports.getViewingHistory = (req, res, next) => {
 	const data = req.query;
 	// console.log(data);
 	const limit = parseInt(data.limit) || 0;
-	const orderBy = data.orderBy || { updated: 'asc' };
+	const orderBy = data.orderBy || { updated: 'desc' };
 	
 	ViewingRecord.
 		find().
