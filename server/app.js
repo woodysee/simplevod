@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(__dirname + "/../client/"));
+app.use(express.static(__dirname + "/../client/build"));
 
 // console.log("Connecting to NoSQL database...");
 mongoose.Promise = global.Promise;

@@ -59,10 +59,13 @@ npm start
 ### Deployment
 
 - Build the frontend site.
+- Packages required: `nginx`, `pm2`
 
 ```shell
 
 cd client
 npm run build
+cd ../server
+npm start # This will run the nodejs server app
 
 ```
