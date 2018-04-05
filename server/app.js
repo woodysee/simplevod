@@ -35,6 +35,14 @@ app.use(cors({
 }));
 app.use('/api', routes);
 
+app.get('/*', function(req, res) {
+	res.sendFile(path.join(__dirname, '/../client/build/index.html'), function(err) {
+		if (err) {
+			res.status(500).send(err)
+		}
+	})
+})
+
 app.listen(process.env.SERVER_PORT, () => {
 	console.info(
 	"server/app.js: express.js server app is now running locally on port: " +

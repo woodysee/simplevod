@@ -1,9 +1,6 @@
 // console.log("Importing fundamental modules...");
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-	Redirect
-} from 'react-router-dom';
 
 // console.log("Importing Redux action-creators and thunks...");
 import { setCurrentPage } from '../../../actions/mainActions';
